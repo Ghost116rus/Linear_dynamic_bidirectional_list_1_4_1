@@ -21,7 +21,7 @@ void My_List::show(Node* pHead, std::string message, const std::function<Node* (
 
 	do
 	{
-		std::cout << number++ << "-ый элемент " << message << start->data << std::endl;
+		std::cout << number++ << "-ый элемент " << message + " " << start->data << std::endl;
 		start = fcn(start);
 	} while (start != pHead);
 
@@ -77,7 +77,7 @@ void My_List::add(MyList* list, int data, bool before, int find_data, const std:
 
 	if (current)
 	{
-		if (before)
+		if (!before)
 		{
 			current = current->pPrevious;
 		}
@@ -114,6 +114,18 @@ void My_List::remove(MyList* list, int find_data, const std::function<Node* (Nod
 	else
 	{
 		std::cout << "Не удалось найти элемент списка с заданными данными\n";
+	}
+}
+
+void My_List::clean_memory(MyList* list)
+{
+	Node* current = list->pHead;
+
+	while (current)
+	{
+		Node* temp = current->pNext;
+		delete current;
+		current = temp;
 	}
 }
 

@@ -31,5 +31,5 @@ namespace My_List
 
 	void remove(MyList* list, int find_data, const std::function<Node* (Node*)>& fcn);
 
-
+	void clean_memory(MyList* list);
 }

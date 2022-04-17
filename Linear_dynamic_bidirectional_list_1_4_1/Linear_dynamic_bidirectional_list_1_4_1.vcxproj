@@ -141,9 +141,11 @@
   <ItemGroup>
     <ClCompile Include="Linear_dynamic_bidirectional_list_1_4_1.cpp" />
     <ClCompile Include="MyList.cpp" />
+    <ClCompile Include="User_interface.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyList.h" />
+    <ClInclude Include="User_interface.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
