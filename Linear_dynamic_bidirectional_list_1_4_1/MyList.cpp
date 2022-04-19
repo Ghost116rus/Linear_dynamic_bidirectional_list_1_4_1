@@ -4,14 +4,12 @@ using namespace My_List;
 
 MyList* My_List::create()
 {
-	{
-		MyList* Temp = new MyList();
-		Temp->count = 0;
-		Temp->pHead = nullptr;
+	MyList* Temp = new MyList();
+	Temp->count = 0;
+	Temp->pHead = nullptr;
 
-		return Temp;
-	}
-
+	return Temp;
+	
 }
 
 void My_List::show(Node* pHead, std::string message, const std::function<Node* (Node*)>& fcn)
