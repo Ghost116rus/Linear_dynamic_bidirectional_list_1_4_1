@@ -9,8 +9,8 @@ namespace My_List
 	struct Node
 	{
 		int data = 0;
-		Node* pNext = nullptr;
-		Node* pPrevious = nullptr;
+		Node* pNext = this;
+		Node* pPrevious = this;
 	};
 
 	struct MyList
@@ -27,9 +27,9 @@ namespace My_List
 
 	void pushfront(MyList* list, int data);
 
-	void add(MyList* list, int data, bool before, int find_data, const std::function<Node* (Node*)>& fcn);
+	void add(MyList* list, int data, bool before, Node* current);
 
-	void remove(MyList* list, int find_data, const std::function<Node* (Node*)>& fcn);
+	void remove(MyList* list, Node* current);
 
 	void clean_memory(MyList* list);
 }

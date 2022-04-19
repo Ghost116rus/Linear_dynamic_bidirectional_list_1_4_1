@@ -18,35 +18,32 @@ void My_List::show(Node* pHead, std::string message, const std::function<Node* (
 {
 	Node* start = pHead;
 	int number = 1;
-
 	do
 	{
-		std::cout << number++ << "-ый элемент " << message + " " << start->data << std::endl;
+		std::cout << number++ << "-ый элемент" << message + " " << start->data << std::endl;
 		start = fcn(start);
 	} while (start != pHead);
-
 }
 
 Node* My_List::find(const MyList* list, int find_data, const std::function<Node* (Node*)>& fcn)
 {
 	Node* current = list->pHead;
-
-	for (size_t i = 0; i < list->count; i++)
+	do
 	{
 		if (current->data == find_data)
 		{
 			return current;
 		}
 		current = fcn(current);
-	}
+	} while (current != list->pHead);
 
+	std::cout << "Не удалось найти элемент с заданными данными\n";
 	return nullptr;
 }
 
 void My_List::pushfront(MyList* list, int data)
 {
 	Node* tempH = list->pHead;
-
 
 	list->pHead = new Node();
 	list->pHead->data = data; list->count++;
@@ -66,67 +63,58 @@ void My_List::pushfront(MyList* list, int data)
 	}
 }
 
-void My_List::add(MyList* list, int data, bool before, int find_data, const std::function<Node* (Node*)>& fcn)
+void My_List::add(MyList* list, int data, bool before, Node* current)
 {
-	if (list->count ==0)
+	if (list->count == 0)
 	{
-		return My_List::pushfront(list, data);
+		return pushfront(list, data);
 	}
 
-	Node* current = My_List::find(list, find_data, fcn);
-
-	if (current)
+	if (!before)
 	{
-		if (!before)
+		if (current == list->pHead)
 		{
-			current = current->pPrevious;
+			return pushfront(list, data);
 		}
 
-		Node* temp = new Node();
-		temp->data = data;
-
-		temp->pNext = current->pNext;
-		temp->pPrevious = current;
-		current->pNext->pPrevious = temp;
-		current->pNext = temp;
-
-		std::cout << "Добавление выполено успешно\n";
+		current = current->pPrevious;
 	}
-	else
-	{
-		std::cout << "Не удалось найти элемент списка с заданными данными\n";
-	}
+
+	Node* temp = new Node();
+	temp->data = data;
+
+	temp->pNext = current->pNext;
+	temp->pPrevious = current;
+	current->pNext->pPrevious = temp;
+	current->pNext = temp;
+
+	list->count++;
+
+	std::cout << "Добавление выполено успешно\n";
+
 }
 
-void My_List::remove(MyList* list, int find_data, const std::function<Node* (Node*)>& fcn)
+void My_List::remove(MyList* list, Node* current)
 {
-	Node* current = find(list, find_data, fcn);
+	current->pNext->pPrevious = current->pPrevious;
+	current->pPrevious->pNext = current->pNext;
 
-	if (current)
-	{
-		current->pNext->pPrevious = current->pPrevious;
-		current->pPrevious->pNext = current->pNext;
+	delete current; list->count--;
 
-		delete current;
-
-		std::cout << "Удаление произошло успешно\n";
-	}
-	else
-	{
-		std::cout << "Не удалось найти элемент списка с заданными данными\n";
-	}
+	std::cout << "Удаление произошло успешно\n";
 }
 
 void My_List::clean_memory(MyList* list)
 {
-	Node* current = list->pHead;
+	Node* current = list->pHead->pNext;
 
-	while (current)
+	while (list->count)
 	{
-		Node* temp = current->pNext;
-		delete current;
-		current = temp;
+		remove(list, list->pHead);
+		list->pHead = current;
+		current = current->pNext;
 	}
+	delete list;
 }
 
 
