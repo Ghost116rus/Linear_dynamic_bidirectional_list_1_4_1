@@ -13,7 +13,7 @@ Node* My_List::create()
 
 bool My_List::empty(Node* head)
 {
-	return head->pNext == head;
+	return (head->pNext == head);
 }
 
 void My_List::show(Node* pHead, std::string message, const std::function<Node* (Node*)>& fcn)
@@ -22,7 +22,7 @@ void My_List::show(Node* pHead, std::string message, const std::function<Node* (
 	int number = 1;
 	while (start != pHead)
 	{
-		std::cout << number++ << "-ый элемент" << message + " " << start->data << std::endl;
+		std::cout << number++ << "-ый элемент " << message + " " << start->data << std::endl;
 		start = fcn(start);
 	} 
 }
@@ -30,13 +30,16 @@ void My_List::show(Node* pHead, std::string message, const std::function<Node* (
 Node* My_List::find(Node* pHead, int find_data, const std::function<Node* (Node*)>& fcn)
 {
 	Node* current = fcn(pHead);
+	int number = 0;
 	while (current != pHead)
 	{
 		if (current->data == find_data)
 		{
+			std::cout << "\t Найден за " << number << " итераций\n";
 			return current;
 		}
 		current = fcn(current);
+		number++;
 	} 
 
 	std::cout << "Не удалось найти элемент с заданными данными\n";
@@ -58,11 +61,8 @@ void My_List::add(Node* current, int data, bool before)
 	current->pNext->pPrevious = temp;
 	current->pNext = temp;
 
-
 	std::cout << "Добавление выполено успешно\n";
-
 }
-
 
 void My_List::remove(Node* current)
 {
@@ -88,6 +88,3 @@ void My_List::clean_memory(Node* list)
 	}
 	delete list;
 }
-
-
-
