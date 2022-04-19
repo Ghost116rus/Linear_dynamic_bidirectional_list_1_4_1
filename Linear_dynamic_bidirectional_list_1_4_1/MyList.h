@@ -19,17 +19,19 @@ namespace My_List
 		Node* pHead;
 	};
 
-	MyList* create();
+	Node* create();
+
+	bool empty(Node* head);
 
 	void show(Node* pHead, std::string message, const std::function<Node* (Node*)>& fcn);
 
-	Node* find(const MyList* list, int find_data, const std::function<Node* (Node*)>& fcn);
+	Node* find(Node* pHead, int find_data, const std::function<Node* (Node*)>& fcn);
 
-	void pushfront(MyList* list, int data);
+	//void pushfront(MyList* list, int data);
 
-	void add(MyList* list, int data, bool before, Node* current);
+	void add(Node* current, int data, bool before);
 
-	void remove(MyList* list, Node* current);
+	void remove(Node* current);
 
-	void clean_memory(MyList* list);
+	void clean_memory(Node* list);
 }

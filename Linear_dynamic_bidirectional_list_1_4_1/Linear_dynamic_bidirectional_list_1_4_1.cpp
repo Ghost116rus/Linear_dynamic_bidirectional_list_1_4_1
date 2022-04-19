@@ -6,7 +6,7 @@ int main()
 {
     setlocale(LC_ALL, "ru");
 
-    My_List::MyList* list = nullptr;
+    My_List::Node* list = nullptr;
     menu(list);
 }
 

@@ -28,10 +28,10 @@ void write_author();
 
 int aboutDirection();
 
-void add_element(My_List::MyList* list, My_List::Node* current, int& temp_data, int& left);
+void add_element(My_List::Node* list, My_List::Node* current, int& temp_data, int& left);
 
-void delete_element(My_List::MyList* list, My_List::Node* current, int& find_data, int& left);
+void delete_element(My_List::Node* list, My_List::Node* current, int& find_data, int& left);
 
 
 /*  основная программная реализация интерфейса  */
-void menu(My_List::MyList* list);
+void menu(My_List::Node* list);

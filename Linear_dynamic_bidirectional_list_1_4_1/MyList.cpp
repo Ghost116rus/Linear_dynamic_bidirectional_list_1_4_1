@@ -2,85 +2,52 @@
 
 using namespace My_List;
 
-MyList* My_List::create()
+Node* My_List::create()
 {
-	MyList* Temp = new MyList();
-	Temp->count = 0;
-	Temp->pHead = nullptr;
+	Node* Temp = new Node();
+	Temp->pNext = Temp;
+	Temp->pPrevious = Temp;
 
-	return Temp;
-	
+	return Temp;	
+}
+
+bool My_List::empty(Node* head)
+{
+	return head->pNext == head;
 }
 
 void My_List::show(Node* pHead, std::string message, const std::function<Node* (Node*)>& fcn)
 {
-	Node* start = pHead;
+	Node* start = fcn(pHead);
 	int number = 1;
-	do
+	while (start != pHead)
 	{
 		std::cout << number++ << "-ый элемент" << message + " " << start->data << std::endl;
 		start = fcn(start);
-	} while (start != pHead);
+	} 
 }
 
-Node* My_List::find(const MyList* list, int find_data, const std::function<Node* (Node*)>& fcn)
+Node* My_List::find(Node* pHead, int find_data, const std::function<Node* (Node*)>& fcn)
 {
-	Node* current = list->pHead;
-	do
+	Node* current = fcn(pHead);
+	while (current != pHead)
 	{
 		if (current->data == find_data)
 		{
 			return current;
 		}
 		current = fcn(current);
-	} while (current != list->pHead);
+	} 
 
 	std::cout << "Не удалось найти элемент с заданными данными\n";
 	return nullptr;
 }
 
-void My_List::pushfront(MyList* list, int data)
+void My_List::add(Node* current, int data, bool before)
 {
-	Node* tempH = nullptr;
-
-	if (list->count)
+	if (!(before))
 	{
-		tempH = list->pHead;
-	}
-
-	list->pHead = new Node();
-	list->pHead->data = data; list->count++;
-	
-	if (tempH)
-	{
-		list->pHead->pNext = tempH;
-		list->pHead->pPrevious = tempH->pPrevious;
-
-		tempH->pPrevious->pNext = list->pHead;
-		tempH->pPrevious = list->pHead;
-	}
-	else
-	{
-		list->pHead->pNext = list->pHead;
-		list->pHead->pPrevious = list->pHead;
-	}
-}
-
-void My_List::add(MyList* list, int data, bool before, Node* current)
-{
-	if (list->count == 0)
-	{
-		return pushfront(list, data);
-	}
-
-	if (!before)
-	{
-		if (current == list->pHead)
-		{
-			return pushfront(list, data);
-		}
-
-		current = current->pPrevious;
+		current->pPrevious;
 	}
 
 	Node* temp = new Node();
@@ -91,34 +58,33 @@ void My_List::add(MyList* list, int data, bool before, Node* current)
 	current->pNext->pPrevious = temp;
 	current->pNext = temp;
 
-	list->count++;
 
 	std::cout << "Добавление выполено успешно\n";
 
 }
 
 
-void My_List::remove(MyList* list, Node* current)
+void My_List::remove(Node* current)
 {
-	if (current == list->pHead) { list->pHead = current->pNext; }
+	if (empty(current)) { return; }
 
 	current->pNext->pPrevious = current->pPrevious;
 	current->pPrevious->pNext = current->pNext;
 
-	delete current; list->count--;
+	delete current;
 
 	std::cout << "Удаление произошло успешно\n";
 }
 
-void My_List::clean_memory(MyList* list)
+void My_List::clean_memory(Node* list)
 {
-	Node* current = list->pHead->pNext;
+	Node* current = list->pNext;
 
-	while (list->count)
+	while (current != current->pNext)
 	{
-		remove(list, list->pHead);
-		list->pHead = current;
-		current = current->pNext;
+		list = current->pNext;
+		remove(current);
+		current = list;
 	}
 	delete list;
 }
