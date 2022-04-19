@@ -43,7 +43,12 @@ Node* My_List::find(const MyList* list, int find_data, const std::function<Node*
 
 void My_List::pushfront(MyList* list, int data)
 {
-	Node* tempH = list->pHead;
+	Node* tempH = nullptr;
+
+	if (list->count)
+	{
+		tempH = list->pHead;
+	}
 
 	list->pHead = new Node();
 	list->pHead->data = data; list->count++;
@@ -94,8 +99,11 @@ void My_List::add(MyList* list, int data, bool before, Node* current)
 
 }
 
+
 void My_List::remove(MyList* list, Node* current)
 {
+	if (current == list->pHead) { list->pHead = current->pNext; }
+
 	current->pNext->pPrevious = current->pPrevious;
 	current->pPrevious->pNext = current->pNext;
 

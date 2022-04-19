@@ -84,7 +84,7 @@ My_List::Node* my_search(My_List::MyList* list, int& find_data, int& left)
 
 	if (left)
 	{
-		current = My_List::find(list, list->pHead->pPrevious, find_data, [](My_List::Node* current)
+		current = My_List::find(list, find_data, [](My_List::Node* current)
 			{
 				return current->pPrevious;
 			}
@@ -92,7 +92,7 @@ My_List::Node* my_search(My_List::MyList* list, int& find_data, int& left)
 	}
 	else
 	{
-		current = My_List::find(list, list->pHead, find_data, [](My_List::Node* current)
+		current = My_List::find(list, find_data, [](My_List::Node* current)
 			{
 				return current->pNext;
 			}
@@ -206,11 +206,17 @@ void menu(My_List::MyList* list)
 
 		case Show_list:
 
+
+			if (!(list->count))
+			{
+				std::cout << "Список пустой!\n"; break;
+			}
+
 			left = aboutDirection();
 
 			if (left)
 			{
-				My_List::show(list->pHead, list->pHead->pPrevious, "Проход списка в обратном направлении", [](My_List::Node* current)
+				My_List::show(list->pHead->pPrevious, "Проход списка в обратном направлении", [](My_List::Node* current)
 					{
 						return current->pPrevious;
 					}
@@ -218,7 +224,7 @@ void menu(My_List::MyList* list)
 			}
 			else
 			{
-				My_List::show(list->pHead, list->pHead, "Проход списка в прямом направлении", [](My_List::Node* current)
+				My_List::show(list->pHead, "Проход списка в прямом направлении", [](My_List::Node* current)
 					{
 						return current->pNext;
 					}
