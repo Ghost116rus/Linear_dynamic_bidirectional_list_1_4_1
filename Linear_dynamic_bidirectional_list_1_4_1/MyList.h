@@ -13,12 +13,6 @@ namespace My_List
 		Node* pPrevious = this;
 	};
 
-	struct MyList
-	{
-		int count;
-		Node* pHead;
-	};
-
 	/// <summary>
 	/// Функция создания нашего спсика
 	/// </summary>

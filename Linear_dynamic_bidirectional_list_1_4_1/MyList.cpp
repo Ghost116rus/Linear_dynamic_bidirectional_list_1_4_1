@@ -50,7 +50,7 @@ void My_List::add(Node* current, int data, bool before)
 {
 	if (!(before))
 	{
-		current->pPrevious;
+		current = current->pPrevious;
 	}
 
 	Node* temp = new Node();
